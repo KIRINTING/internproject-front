@@ -1,0 +1,108 @@
+<div class="page-container">
+    <p-confirmpopup></p-confirmpopup>
+    <div class="actions-bar">
+        <h2>จัดการข่าวสารประชาสัมพันธ์</h2>
+        <div class="search-box">
+            <i class="pi pi-search"></i>
+            <input type="text" placeholder="ค้นหาข่าวสาร..." (input)="onSearch($event)">
+        </div>
+
+        <button class="btn-create" (click)="openCreateModal()">
+            <i class="pi pi-plus"></i> เพิ่มข่าวสาร
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>หัวข้อ/รายละเอียด</th>
+                    <th>ประเภท</th>
+                    <th>วันครบกำหนด (Due Date)</th>
+                    <th>วันที่สร้าง</th>
+                    <th>จัดการ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of filteredInfos">
+                    <td class="detail-col">
+                        <div class="info-id">ID: {{ item.info_id }}</div>
+                        <div class="info-title"><strong>{{ item.title }}</strong></div>
+                        <div class="info-detail">{{ item.detail | slice:0:80 }}{{ item.detail.length > 80 ? '...' : ''
+                            }}</div>
+                    </td>
+                    <td>
+                        <span class="badge" [class.badge-announce]="item.category === 'Announce'"
+                            [class.badge-important]="item.category === 'Important'"
+                            [class.badge-guide]="item.category === 'Guide'">
+                            {{ item.category }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="due-date" [class.overdue]="isOverdue(item.due_date)">
+                            {{ item.due_date | date:'dd/MM/yyyy' }}
+                        </span>
+                    </td>
+                    <td>{{ item.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-edit" (click)="editInfo(item)">
+                                <i class="pi pi-pencil"></i>
+                            </button>
+                            <button class="btn-delete" (click)="deleteInfo(item, $event)">
+                                <i class="pi pi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="filteredInfos.length === 0">
+                    <td colspan="4" class="empty-state">ไม่พบข้อมูลข่าวสาร</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Create/Edit Modal -->
+    <div class="modal-overlay" *ngIf="showModal">
+        <div class="modal">
+            <h3>{{ isEditing ? 'แก้ไขข่าวสาร' : 'เพิ่มข่าวสารใหม่' }}</h3>
+
+            <form (ngSubmit)="saveInfo()">
+                <div class="form-group">
+                    <label>รหัสข่าวสาร (Info ID)</label>
+                    <input type="text" [(ngModel)]="currentInfo.info_id" name="info_id" required>
+                </div>
+
+                <div class="form-group">
+                    <label>หัวข้อข่าวสาร</label>
+                    <input type="text" [(ngModel)]="currentInfo.title" name="title" required
+                        placeholder="เช่น ประกาศผลการคัดเลือกสถานประกอบการ">
+                </div>
+
+                <div class="form-group">
+                    <label>ประเภทข่าวสาร</label>
+                    <select [(ngModel)]="currentInfo.category" name="category" required>
+                        <option value="Announce">Announce (ประกาศ)</option>
+                        <option value="Important">Important (สำคัญ)</option>
+                        <option value="Guide">Guide (คู่มือ)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>รายละเอียด</label>
+                    <textarea [(ngModel)]="currentInfo.detail" name="detail" rows="5" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>วันครบกำหนด (Due Date)</label>
+                    <input type="date" [(ngModel)]="currentInfo.due_date" name="due_date" required>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" (click)="closeModal()">ยกเลิก</button>
+                    <button type="submit" class="btn-save">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

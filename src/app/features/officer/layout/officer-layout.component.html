@@ -1,0 +1,58 @@
+<div class="officer-layout">
+    <p-confirmpopup></p-confirmpopup>
+
+    <!-- Permanent Sidebar -->
+    <aside class="sidebar" [class.collapsed]="!sidebarVisible">
+        <div class="logo-section">
+            <h2 *ngIf="sidebarVisible">Officer Panel</h2>
+            <i *ngIf="!sidebarVisible" class="pi pi-briefcase"></i>
+        </div>
+
+        <nav class="nav-menu">
+            <a routerLink="/officer/dashboard" routerLinkActive="active" class="nav-item" [title]="'แดชบอร์ด'">
+                <i class="pi pi-home"></i>
+                <span *ngIf="sidebarVisible">แดชบอร์ด</span>
+            </a>
+
+            <a routerLink="/officer/requests" routerLinkActive="active" class="nav-item" [title]="'จัดการคำขอฝึกงาน'">
+                <i class="pi pi-file"></i>
+                <span *ngIf="sidebarVisible">จัดการคำขอฝึกงาน</span>
+            </a>
+
+            <a routerLink="/officer/news" routerLinkActive="active" class="nav-item" [title]="'จัดการข่าวสาร'">
+                <i class="pi pi-megaphone"></i>
+                <span *ngIf="sidebarVisible">จัดการข่าวสาร</span>
+            </a>
+
+            <a routerLink="/officer/reports" routerLinkActive="active" class="nav-item" [title]="'รายงานสรุป'">
+                <i class="pi pi-chart-bar"></i>
+                <span *ngIf="sidebarVisible">รายงานสรุป</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button pButton [icon]="sidebarVisible ? 'pi pi-times' : 'pi pi-bars'"
+                    (click)="sidebarVisible = !sidebarVisible"
+                    class="p-button-text p-button-rounded mr-2 menu-btn"></button>
+                <h1>{{ pageTitle }}</h1>
+            </div>
+            <div class="top-bar-right">
+                <div class="user-info">
+                    <span class="user-name">เจ้าหน้าที่</span>
+                    <span class="user-role">ผู้ดูแลระบบ</span>
+                </div>
+                <button class="logout-btn" (click)="logout($event)">
+                    <i class="pi pi-sign-out"></i>
+                    <span>ออกจากระบบ</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <router-outlet (activate)="onActivate($event)"></router-outlet>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,149 @@
+<div class="detail-container" *ngIf="request">
+    <p-confirmpopup></p-confirmpopup>
+    <div class="header-actions">
+        <button class="btn-back" (click)="goBack()">
+            <i class="pi pi-arrow-left"></i> ย้อนกลับ
+        </button>
+        <div class="status-indicator" [ngClass]="request.status || 'pending'">
+            สถานะ: {{ getStatusLabel(request.status) }}
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Left Column: Information -->
+        <div class="info-section">
+            <div class="card">
+                <h3>ข้อมูลนักศึกษา</h3>
+                <div class="field-row">
+                    <div class="field">
+                        <label>รหัสนักศึกษา</label>
+                        <div>{{ request.student_code }}</div>
+                    </div>
+                    <div class="field">
+                        <label>ชื่อ-นามสกุล</label>
+                        <div>{{ request.title }}{{ request.first_name }} {{ request.last_name }}</div>
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label>หมู่เรียน</label>
+                        <div>{{ request.class_group }}</div>
+                    </div>
+                    <div class="field">
+                        <label>เบอร์โทรศัพท์</label>
+                        <div>{{ request.phone }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>ข้อมูลสถานประกอบการ</h3>
+                <div class="field-group">
+                    <label>ชื่อหน่วยงาน</label>
+                    <div>{{ request.company_name }}</div>
+                </div>
+                <div class="field-group">
+                    <label>ที่อยู่</label>
+                    <div>{{ request.company_address }}</div>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label>ตำแหน่งที่ฝึก</label>
+                        <div>{{ request.position }}</div>
+                    </div>
+                    <div class="field">
+                        <label>เบอร์โทรศัพท์</label>
+                        <div>{{ request.company_phone }}</div>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label>รายละเอียดงาน</label>
+                    <div>{{ request.job_description }}</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label>ผู้ประสานงาน</label>
+                        <div>{{ request.coordinator_name }}</div>
+                    </div>
+                    <div class="field">
+                        <label>ตำแหน่ง</label>
+                        <div>{{ request.coordinator_position }}</div>
+                    </div>
+                    <div class="field">
+                        <label>เบอร์โทรศัพท์</label>
+                        <div>{{ request.coordinator_phone }}</div>
+                    </div>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label>ผู้อนุมัติ (ในนามบริษัท)</label>
+                        <div>{{ request.approver_name }}</div>
+                    </div>
+                    <div class="field">
+                        <label>ตำแหน่ง</label>
+                        <div>{{ request.approver_position }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" *ngIf="request.photo_path">
+                <h3>รูปถ่ายแผนที่/สถานที่</h3>
+                <img [src]="getPhotoUrl(request.photo_path)" alt="Location Photo" class="location-photo">
+            </div>
+        </div>
+
+        <!-- Right Column: Actions -->
+        <div class="action-sidebar">
+            <div class="card action-card">
+                <h3>การจัดการ</h3>
+
+                <!-- Pending State Actions -->
+                <div *ngIf="request.status === 'pending'" class="action-buttons">
+                    <button class="btn-approve" (click)="approve($event)">
+                        <i class="pi pi-check-circle"></i> อนุมัติคำขอ
+                    </button>
+                    <button class="btn-reject" (click)="openRejectModal()">
+                        <i class="pi pi-times-circle"></i> ปฏิเสธคำขอ
+                    </button>
+                </div>
+
+                <!-- Approved State Actions -->
+                <div *ngIf="request.status === 'officer_approved' || request.status === 'dean_approved'"
+                    class="approved-info">
+                    <div class="success-message">
+                        <i class="pi pi-check"></i> อนุมัติเรียบร้อยแล้ว
+                    </div>
+                    <button class="btn-download" (click)="downloadPdf()">
+                        <i class="pi pi-download"></i> ดาวน์โหลดเอกสาร PDF
+                    </button>
+                </div>
+
+                <!-- Rejected State Actions -->
+                <div *ngIf="request.status === 'rejected'" class="rejected-info">
+                    <div class="error-message">
+                        <i class="pi pi-times"></i> คำขอถูกปฏิเสธ
+                    </div>
+                    <div class="reject-reason">
+                        <strong>เหตุผล:</strong> {{ request.rejection_reason }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reject Modal -->
+    <div class="modal-overlay" *ngIf="showRejectModal">
+        <div class="modal">
+            <h3>ระบุเหตุผลการปฏิเสธ</h3>
+            <textarea [(ngModel)]="rejectReason" placeholder="กรุณาระบุเหตุผล..."></textarea>
+            <div class="modal-actions">
+                <button class="btn-cancel" (click)="showRejectModal = false">ยกเลิก</button>
+                <button class="btn-confirm-reject" (click)="confirmReject()">ยืนยันปฏิเสธ</button>
+            </div>
+        </div>
+    </div>
+</div>

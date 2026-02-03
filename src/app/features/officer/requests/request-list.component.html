@@ -1,0 +1,54 @@
+<div class="page-container">
+    <div class="actions-bar">
+        <div class="search-box">
+            <i class="pi pi-search"></i>
+            <input type="text" placeholder="ค้นหาชื่อนักศึกษา หรือ รหัส..." (input)="onSearch($event)">
+        </div>
+
+        <div class="filter-group">
+            <button [class.active]="filterStatus === 'all'" (click)="setFilter('all')">ทั้งหมด</button>
+            <button [class.active]="filterStatus === 'pending'" (click)="setFilter('pending')">รอตรวจสอบ</button>
+            <button [class.active]="filterStatus === 'officer_approved'"
+                (click)="setFilter('officer_approved')">อนุมัติแล้ว</button>
+            <button [class.active]="filterStatus === 'rejected'" (click)="setFilter('rejected')">ถูกปฏิเสธ</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>สถานะ</th>
+                    <th>รหัสนักศึกษา</th>
+                    <th>ชื่อ-นามสกุล</th>
+                    <th>หน่วยงานที่ฝึก</th>
+                    <th>ตำแหน่ง</th>
+                    <th>วันที่ส่ง</th>
+                    <th>จัดการ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let req of filteredRequests">
+                    <td>
+                        <span class="status-badge" [ngClass]="req.status || 'pending'">
+                            {{ getStatusLabel(req.status) }}
+                        </span>
+                    </td>
+                    <td>{{ req.student_code }}</td>
+                    <td>{{ req.title }}{{ req.first_name }} {{ req.last_name }}</td>
+                    <td>{{ req.company_name }}</td>
+                    <td>{{ req.position }}</td>
+                    <td>{{ req.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
+                    <td>
+                        <button class="btn-view" (click)="viewDetail(req.id!)">
+                            <i class="pi pi-eye"></i> รายละเอียด
+                        </button>
+                    </td>
+                </tr>
+                <tr *ngIf="filteredRequests.length === 0">
+                    <td colspan="7" class="empty-state">ไม่พบข้อมูลคำขอฝึกงาน</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

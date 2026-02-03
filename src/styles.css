@@ -1,0 +1,190 @@
+/* Import PrimeNG ConfirmPopup Theme */
+@import './styles/confirm-popup-theme.css';
+
+/* Premium Design System - Blue & White (Light Mode) */
+:root {
+  /* Primary Colors - Blue Palette */
+  --primary-hue: 220;
+  /* Royal Blue */
+  --primary-sat: 90%;
+  --primary-lig: 55%;
+  --primary: hsl(var(--primary-hue), var(--primary-sat), var(--primary-lig));
+  /* #0E86D4 approx */
+  --primary-light: hsl(var(--primary-hue), 95%, 93%);
+  /* Very light blue background */
+  --primary-dark: hsl(var(--primary-hue), 80%, 35%);
+
+  /* Secondary/Accent Colors */
+  --secondary: #0ea5e9;
+  /* Sky blue */
+  --accent: #f59e0b;
+  /* Amber for contrast/warnings */
+
+  /* Backgrounds & Surfaces */
+  --bg-main: #f8fafc;
+  /* Slate 50 - Very light gray/white */
+  --bg-surface: #ffffff;
+  --bg-hover: #f1f5f9;
+
+  /* Borders */
+  --border-color: #e2e8f0;
+  /* Slate 200 */
+  --border-focus: var(--primary);
+
+  /* Text */
+  --text-main: #1e293b;
+  /* Slate 800 - Dark Blue-Gray */
+  --text-muted: #64748b;
+  /* Slate 500 */
+  --text-invert: #ffffff;
+
+  /* Shadows & Elevations */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Sarabun', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+
+h1 {
+  font-size: 2.25rem;
+  color: var(--primary-dark);
+}
+
+h2 {
+  font-size: 1.875rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* Utilities */
+.glass-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  /* Removed blur for cleaner look, kept standard card style */
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 8px;
+  /* Slightly squarer for professional look */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  gap: 8px;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover {
+  background: var(--bg-hover);
+  color: var(--text-main);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-main);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}

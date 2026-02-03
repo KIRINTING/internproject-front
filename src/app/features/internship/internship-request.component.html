@@ -1,0 +1,201 @@
+<div class="page-container animate-fade-in">
+    <div class="page-header">
+        <h2><span class="icon">📝</span> ส่งขออนุมัติสถานที่ฝึกงาน</h2>
+        <p>กรอกข้อมูลเพื่อส่งคำขออนุมัติสถานที่ฝึกประสบการณ์วิชาชีพ</p>
+    </div>
+
+    <div class="glass-panel form-card">
+        <p-confirmpopup></p-confirmpopup>
+        <form [formGroup]="requestForm" (ngSubmit)="onSubmit($event)">
+
+            <!-- Section 1: Student Information -->
+            <div class="section-title">
+                <h3>📚 ข้อมูลนักศึกษา</h3>
+                <p class="section-desc">ข้อมูลจะถูกกรอกอัตโนมัติจากระบบ</p>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">1. รหัสนักศึกษา <span class="required">*</span></label>
+                    <input type="text" formControlName="student_code" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">คำนำหน้าชื่อ <span class="required">*</span></label>
+                    <select formControlName="title" class="form-control" [class.is-invalid]="isFieldInvalid('title')">
+                        <option value="">เลือกคำนำหน้า</option>
+                        <option value="นาย">นาย</option>
+                        <option value="นาง">นาง</option>
+                        <option value="นางสาว">นางสาว</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. ชื่อ <span class="required">*</span></label>
+                    <input type="text" formControlName="first_name" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('first_name')">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. นามสกุล <span class="required">*</span></label>
+                    <input type="text" formControlName="last_name" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('last_name')">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">4. หมายเลขโทรศัพท์ (เบอร์มือถือ) <span class="required">*</span></label>
+                    <input type="tel" formControlName="phone" class="form-control" placeholder="0812345678"
+                        [class.is-invalid]="isFieldInvalid('phone')">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">5. หมู่เรียน <span class="required">*</span></label>
+                    <input type="text" formControlName="class_group" class="form-control" placeholder="เช่น CS-01"
+                        [class.is-invalid]="isFieldInvalid('class_group')">
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">6. สถานะการลงทะเบียนเรียน <span class="required">*</span></label>
+                    <select formControlName="registration_status" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('registration_status')">
+                        <option value="">เลือกสถานะ</option>
+                        <option value="ลงทะเบียนแล้ว">ลงทะเบียนแล้ว</option>
+                        <option value="ยังไม่ได้ลงทะเบียน">ยังไม่ได้ลงทะเบียน</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Section 2: Company Information -->
+            <div class="section-title">
+                <h3>🏢 ข้อมูลหน่วยงาน/สถานประกอบการ</h3>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label class="form-label">7. ชื่อหน่วยงาน <span class="required">*</span></label>
+                    <input type="text" formControlName="company_name" class="form-control"
+                        placeholder="ชื่อบริษัท/หน่วยงาน" [class.is-invalid]="isFieldInvalid('company_name')">
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">8. ตำแหน่งงานที่ให้ฝึกฯ <span class="required">*</span></label>
+                    <input type="text" formControlName="position" class="form-control"
+                        placeholder="เช่น Web Developer, IT Support" [class.is-invalid]="isFieldInvalid('position')">
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">9. รายละเอียดของงาน/หน้าที่ที่ต้องปฏิบัติ <span
+                            class="required">*</span></label>
+                    <textarea formControlName="job_description" class="form-control" rows="4"
+                        placeholder="อธิบายรายละเอียดงานที่จะทำ (งานต้องเกี่ยวข้องกับทักษะด้านคอมพิวเตอร์และเหมาะสมกับคุณวุฒิ)"
+                        [class.is-invalid]="isFieldInvalid('job_description')"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">10. ที่อยู่ของหน่วยงาน <span class="required">*</span></label>
+                    <textarea formControlName="company_address" class="form-control" rows="3"
+                        placeholder="อาคาร ชั้น เลขที่ หมู่ ถนน ตำบล อำเภอ จังหวัด รหัสไปรษณีย์"
+                        [class.is-invalid]="isFieldInvalid('company_address')"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">11. หมายเลขโทรศัพท์ของหน่วยงาน <span class="required">*</span></label>
+                    <input type="tel" formControlName="company_phone" class="form-control" placeholder="021234567"
+                        [class.is-invalid]="isFieldInvalid('company_phone')">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Section 3: Coordinator Information -->
+            <div class="section-title">
+                <h3>👤 ข้อมูลผู้ประสานงาน</h3>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">12. ชื่อ-นามสกุล ของผู้ประสานงาน <span class="required">*</span></label>
+                    <input type="text" formControlName="coordinator_name" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('coordinator_name')">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">13. ตำแหน่งงานของผู้ประสานงาน <span class="required">*</span></label>
+                    <input type="text" formControlName="coordinator_position" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('coordinator_position')">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">14. หมายเลขโทรศัพท์ของผู้ประสานงาน <span class="required">*</span></label>
+                    <input type="tel" formControlName="coordinator_phone" class="form-control" placeholder="0812345678"
+                        [class.is-invalid]="isFieldInvalid('coordinator_phone')">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Section 4: Approver Information -->
+            <div class="section-title">
+                <h3>✅ ข้อมูลผู้มีอำนาจอนุมัติ</h3>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">15. ชื่อ-นามสกุล ของผู้มีอำนาจอนุมัติ <span
+                            class="required">*</span></label>
+                    <input type="text" formControlName="approver_name" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('approver_name')">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">16. ตำแหน่งงานของผู้มีอำนาจอนุมัติ <span class="required">*</span></label>
+                    <input type="text" formControlName="approver_position" class="form-control"
+                        placeholder="หัวหน้าหน่วยงาน, ผู้อำนวยการ, ผู้จัดการ ฯลฯ"
+                        [class.is-invalid]="isFieldInvalid('approver_position')">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Section 5: Location & Photo -->
+            <div class="section-title">
+                <h3>📍 สถานที่และรูปภาพ</h3>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label class="form-label">17. พิกัด Google Map สถานที่ฝึกประสบการณ์วิชาชีพ</label>
+                    <input type="text" formControlName="google_map_coordinates" class="form-control"
+                        placeholder="ตัวอย่าง: 18.807871, 98.985393">
+                    <small class="form-text">คลิกขวาบน Google Maps แล้วคัดลอกพิกัด</small>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">18. รูปถ่ายนักศึกษากับสถานที่ฝึกประสบการณ์วิชาชีพฯ</label>
+                    <input type="file" (change)="onPhotoSelected($event)" accept="image/*" class="form-control">
+                    <small class="form-text">รองรับไฟล์ JPG, PNG ขนาดไม่เกิน 5MB</small>
+
+                    <div *ngIf="photoPreview" class="photo-preview">
+                        <img [src]="photoPreview" alt="Preview">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">21. หมายเหตุ</label>
+                    <textarea formControlName="notes" class="form-control" rows="3"
+                        placeholder="ข้อมูลเพิ่มเติม (ถ้ามี)"></textarea>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+                    <span *ngIf="!isLoading">📤 ส่งคำขออนุมัติ</span>
+                    <span *ngIf="isLoading">⏳ กำลังส่ง...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

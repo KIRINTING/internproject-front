@@ -1,0 +1,221 @@
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.welcome-section {
+    margin-bottom: 24px;
+}
+
+.welcome-section h2 {
+    margin: 0 0 8px 0;
+    color: var(--primary-dark);
+}
+
+.welcome-section p {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: var(--bg-surface);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.stat-card.pending .stat-icon {
+    background: #fffbeb;
+    color: #f59e0b;
+}
+
+.stat-card.approved .stat-icon {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.stat-card.rejected .stat-icon {
+    background: #fef2f2;
+    color: #ef4444;
+}
+
+.stat-card.total .stat-icon {
+    background: var(--bg-hover);
+    color: var(--text-muted);
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-content h3 {
+    margin: 0 0 4px 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.2;
+}
+
+.stat-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.recent-section {
+    background: var(--bg-surface);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h3 {
+    margin: 0;
+    color: var(--text-main);
+}
+
+.section-header a {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.recent-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px;
+    border: 1px solid var(--bg-hover);
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.recent-item:hover {
+    background-color: var(--bg-hover);
+}
+
+.item-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-icon.pending {
+    background: #fffbeb;
+    color: #f59e0b;
+}
+
+.item-icon.officer_approved {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.item-icon.dean_approved {
+    background: #d1fae5;
+    color: #10b981;
+}
+
+.item-icon.rejected {
+    background: #fef2f2;
+    color: #ef4444;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-title {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.item-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.item-status {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.item-status.pending {
+    background: #fffbeb;
+    color: #92400e;
+}
+
+.item-status.officer_approved {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.item-status.dean_approved {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.item-status.rejected {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 24px;
+}

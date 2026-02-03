@@ -1,0 +1,95 @@
+<div class="p-6">
+    <p-confirmpopup></p-confirmpopup>
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Document Management</h1>
+        <button routerLink="/officer/dashboard" class="text-blue-500 hover:underline">
+            Back to Dashboard
+        </button>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8 border border-gray-100">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Upload New Document</h2>
+        <form [formGroup]="uploadForm" (ngSubmit)="onUpload()">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                    <input type="text" formControlName="title"
+                        class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                    <select formControlName="type"
+                        class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="form">Form</option>
+                        <option value="manual">Manual</option>
+                        <option value="announcement">Announcement</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea formControlName="description" rows="3"
+                        class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">File</label>
+                    <input type="file" (change)="onFileSelected($event)"
+                        class="w-full p-2 border border-gray-300 rounded bg-gray-50">
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" [disabled]="uploadForm.invalid || !selectedFile"
+                    class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400 transition-colors">
+                    Upload Document
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Documents List -->
+    <div class="bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden">
+        <h2 class="text-xl font-semibold p-6 border-b border-gray-100 text-gray-700">Uploaded Documents</h2>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 text-gray-600 font-medium">
+                    <tr>
+                        <th class="p-4">Title</th>
+                        <th class="p-4">Type</th>
+                        <th class="p-4">Description</th>
+                        <th class="p-4">Date</th>
+                        <th class="p-4 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr *ngFor="let doc of documents" class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 font-medium text-gray-800">{{ doc.title }}</td>
+                        <td class="p-4">
+                            <span class="px-2 py-1 text-xs rounded-full" [ngClass]="{
+                                    'bg-blue-100 text-blue-800': doc.type === 'form',
+                                    'bg-green-100 text-green-800': doc.type === 'manual',
+                                    'bg-yellow-100 text-yellow-800': doc.type === 'announcement',
+                                    'bg-gray-100 text-gray-800': doc.type === 'other'
+                                }">
+                                {{ doc.type | titlecase }}
+                            </span>
+                        </td>
+                        <td class="p-4 text-gray-600 max-w-xs truncate">{{ doc.description }}</td>
+                        <td class="p-4 text-gray-500">{{ doc.created_at | date }}</td>
+                        <td class="p-4 text-right">
+                            <a [href]="getFileUrl(doc.file_path)" target="_blank"
+                                class="text-blue-500 hover:underline mr-4">Download</a>
+                            <button (click)="deleteDocument(doc.id, $event)"
+                                class="text-red-500 hover:text-red-700">Delete</button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="documents.length === 0">
+                        <td colspan="5" class="p-8 text-center text-gray-500">No documents found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="dashboard-container">
+    <div class="welcome-section">
+        <h2>ยินดีต้อนรับ, เจ้าหน้าที่</h2>
+        <p>ภาพรวมการดำเนินการฝึกงานและสถานะคำขอต่างๆ</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card pending">
+            <div class="stat-icon">
+                <i class="pi pi-clock"></i>
+            </div>
+            <div class="stat-content">
+                <h3>รอตรวจสอบ</h3>
+                <div class="stat-value">{{ stats.pending }}</div>
+                <div class="stat-desc">คำขอที่รอดำเนินการ</div>
+            </div>
+        </div>
+
+        <div class="stat-card approved">
+            <div class="stat-icon">
+                <i class="pi pi-check-circle"></i>
+            </div>
+            <div class="stat-content">
+                <h3>อนุมัติแล้ว</h3>
+                <div class="stat-value">{{ stats.approved }}</div>
+                <div class="stat-desc">ผ่านการพิจารณาแล้ว</div>
+            </div>
+        </div>
+
+        <div class="stat-card rejected">
+            <div class="stat-icon">
+                <i class="pi pi-times-circle"></i>
+            </div>
+            <div class="stat-content">
+                <h3>ถูกปฏิเสธ</h3>
+                <div class="stat-value">{{ stats.rejected }}</div>
+                <div class="stat-desc">ไม่ผ่านการพิจารณา</div>
+            </div>
+        </div>
+
+        <div class="stat-card total">
+            <div class="stat-icon">
+                <i class="pi pi-users"></i>
+            </div>
+            <div class="stat-content">
+                <h3>ทั้งหมด</h3>
+                <div class="stat-value">{{ stats.total }}</div>
+                <div class="stat-desc">จำนวนคำขอทั้งหมด</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="recent-section">
+        <div class="section-header">
+            <h3>คำขอล่าสุด</h3>
+            <a routerLink="/officer/requests">ดูทั้งหมด</a>
+        </div>
+
+        <div class="recent-list">
+            <div class="recent-item" *ngFor="let req of recentRequests">
+                <div class="item-icon" [ngClass]="req.status || 'pending'">
+                    <i class="pi" [ngClass]="getStatusIcon(req.status)"></i>
+                </div>
+                <div class="item-info">
+                    <div class="item-title">{{ req.student_code }} - {{ req.title }}{{ req.first_name }} {{
+                        req.last_name }}</div>
+                    <div class="item-meta">{{ req.company_name }} • {{ req.created_at | date:'dd/MM/yyyy HH:mm' }}</div>
+                </div>
+                <div class="item-status" [ngClass]="req.status || 'pending'">
+                    {{ getStatusLabel(req.status) }}
+                </div>
+            </div>
+            <div class="empty-state" *ngIf="recentRequests.length === 0">
+                ไม่มีรายการคำขอล่าสุด
+            </div>
+        </div>
+    </div>
+</div>

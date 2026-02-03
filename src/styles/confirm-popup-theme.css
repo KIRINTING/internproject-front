@@ -1,0 +1,167 @@
+/* PrimeNG ConfirmPopup Custom Theme - Clean & Modern */
+
+/* Main container */
+.p-confirmpopup {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    padding: 0;
+    min-width: 320px;
+    max-width: 400px;
+}
+
+/* Content area */
+.p-confirmpopup-content {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+/* Icon styling */
+.p-confirmpopup-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+}
+
+.p-confirmpopup-icon.pi-exclamation-triangle {
+    color: #f59e0b;
+}
+
+.p-confirmpopup-icon.pi-info-circle {
+    color: #3b82f6;
+}
+
+.p-confirmpopup-icon.pi-check-circle {
+    color: #10b981;
+}
+
+/* Message text */
+.p-confirmpopup-message {
+    color: #374151;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+/* Footer with buttons */
+.p-confirmpopup-footer {
+    padding: 0.75rem 1.5rem 1.25rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    border-top: 1px solid #f3f4f6;
+}
+
+/* Button styling */
+.p-confirmpopup-reject-button,
+.p-confirmpopup-accept-button {
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+/* Reject button (Cancel) */
+.p-confirmpopup-reject-button {
+    background: #f9fafb;
+    color: #6b7280;
+    border-color: #e5e7eb;
+}
+
+.p-confirmpopup-reject-button:hover {
+    background: #f3f4f6;
+    color: #374151;
+    border-color: #d1d5db;
+}
+
+/* Accept button (Confirm) */
+.p-confirmpopup-accept-button {
+    background: #3b82f6;
+    color: #ffffff;
+    border-color: #3b82f6;
+}
+
+.p-confirmpopup-accept-button:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+/* Danger variant for delete actions */
+.p-confirmpopup-accept-button.p-button-danger {
+    background: #ef4444;
+    border-color: #ef4444;
+}
+
+.p-confirmpopup-accept-button.p-button-danger:hover {
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+/* Arrow pointer */
+.p-confirmpopup::before,
+.p-confirmpopup::after {
+    border-color: transparent;
+}
+
+.p-confirmpopup::before {
+    border-bottom-color: #e5e7eb;
+}
+
+.p-confirmpopup::after {
+    border-bottom-color: #ffffff;
+}
+
+/* Flipped state (when popup appears above target) */
+.p-confirmpopup.p-confirm-popup-flipped::before {
+    border-top-color: #e5e7eb;
+    border-bottom-color: transparent;
+}
+
+.p-confirmpopup.p-confirm-popup-flipped::after {
+    border-top-color: #ffffff;
+    border-bottom-color: transparent;
+}
+
+/* Animation */
+.p-confirmpopup {
+    animation: confirmPopupFadeIn 0.2s ease-out;
+}
+
+@keyframes confirmPopupFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Focus states for accessibility */
+.p-confirmpopup-reject-button:focus,
+.p-confirmpopup-accept-button:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+    .p-confirmpopup {
+        min-width: 280px;
+        max-width: calc(100vw - 2rem);
+    }
+    
+    .p-confirmpopup-content {
+        padding: 1rem 1.25rem;
+    }
+    
+    .p-confirmpopup-footer {
+        padding: 0.625rem 1.25rem 1rem;
+    }
+}
