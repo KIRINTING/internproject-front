@@ -1,42 +1,78 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment.development';
 import { Observable } from 'rxjs';
+import { AuthService } from '../../../auth/auth.service';
 
 export interface DailyLog {
     id?: number;
-    student_id: string;
-    date: string;
-    work_details: string;
-    image_path?: string;
+    student_code: string;
+    intern_id?: number;
+    log_date: string;
+    work_description: string;
+    hours_worked: number;
+    is_weekend: boolean;
+    photo_url?: string;
     created_at?: string;
-    updated_at?: string;
+}
+
+export interface HoursSummary {
+    weekday_hours: number;
+    weekend_hours: number;
+    total_hours: number;
+    required_weekday_hours: number;
+    required_weekend_hours: number;
+    required_total_hours: number;
+    weekday_percentage: number;
+    weekend_percentage: number;
+    total_percentage: number;
+    total_days_logged: number;
 }
 
 @Injectable({
     providedIn: 'root'
 })
 export class DailyLogService {
-    private apiUrl = `${environment.apiUrl}/daily_logs`;
+    private apiUrl = `${environment.apiUrl}/daily-logs`;
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private authService: AuthService
+    ) { }
 
-    getLogs(studentId: string): Observable<DailyLog[]> {
-        return this.http.get<DailyLog[]>(`${this.apiUrl}?student_id=${studentId}`);
+    getLogs(studentCode?: string): Observable<any> {
+        const user = this.authService.getCurrentUser();
+        const code = studentCode || user?.username;
+        if (!code) {
+            throw new Error('Student code is required');
+        }
+        return this.http.get(`${this.apiUrl}?student_code=${code}`);
     }
 
-    createLog(data: FormData): Observable<DailyLog> {
-        return this.http.post<DailyLog>(this.apiUrl, data);
+    createLog(formData: FormData): Observable<any> {
+        const user = this.authService.getCurrentUser();
+        if (!user || !user.username) {
+            throw new Error('User not logged in');
+        }
+        if (!formData.has('student_code')) {
+            formData.append('student_code', user.username);
+        }
+        return this.http.post(this.apiUrl, formData);
     }
 
-    updateLog(id: number, data: FormData): Observable<DailyLog> {
-        // Use _method: PUT for Laravel file uploads via POST if needed, or just POST with method spoofing
-        // However, for FormData updates with files, standard POST with _method=PUT is safer in Laravel
-        data.append('_method', 'PUT');
-        return this.http.post<DailyLog>(`${this.apiUrl}/${id}`, data);
+    updateLog(id: number, formData: FormData): Observable<any> {
+        return this.http.put(`${this.apiUrl}/${id}`, formData);
     }
 
-    deleteLog(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    deleteLog(id: number): Observable<any> {
+        return this.http.delete(`${this.apiUrl}/${id}`);
+    }
+
+    getSummary(): Observable<any> {
+        const user = this.authService.getCurrentUser();
+        if (!user || !user.username) {
+            throw new Error('User not logged in');
+        }
+        return this.http.get(`${this.apiUrl}/summary?student_code=${user.username}`);
     }
 }

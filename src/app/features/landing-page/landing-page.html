@@ -1,0 +1,174 @@
+<div class="landing-background">
+    <nav class="navbar animate-slide-down">
+        <div class="brand">
+            <span class="logo-icon">✨</span>
+            <span class="logo-text">INTERN<span class="highlight">HUB</span></span>
+        </div>
+        <div class="nav-links">
+            <a routerLink="/companies" class="nav-link">สถานประกอบการ</a>
+            <a routerLink="/login" class="btn-login">เข้าสู่ระบบ</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content animate-fade-in-up">
+            <div class="badge-new">
+                <span class="badge-dot"></span>
+                <span>เปิดรับสมัครนักศึกษาฝึกงานปี 2569</span>
+            </div>
+            <h1>
+                Develop your <span class="gradient-text">Future</span><br>
+                in a new and unique way
+            </h1>
+            <p class="hero-subtitle">
+                ค้นหาโอกาสฝึกงานที่ดีที่สุด เชื่อมต่อกับสถานประกอบการชั้นนำ
+                และพัฒนาทักษะวิชาชีพของคุณในยุคดิจิทัล
+            </p>
+
+            <div class="hero-actions">
+                <a routerLink="/login" class="btn-primary-lg">ลงทะเบียนนักศึกษา</a>
+                <a routerLink="/register-company" class="btn-outline-lg">สำหรับสถานประกอบการ</a>
+            </div>
+        </div>
+
+        <div class="hero-visual animate-float">
+            <!-- Abstract representation of the guy in the image -->
+            <div class="floating-card c1">
+                <span class="icon">🚀</span>
+                <div class="text">
+                    <strong>50+</strong>
+                    <small>Partner Companies</small>
+                </div>
+            </div>
+            <div class="floating-card c2">
+                <span class="icon">👨‍🎓</span>
+                <div class="text">
+                    <strong>500+</strong>
+                    <small>Students</small>
+                </div>
+            </div>
+            <img src="assets/tech_landing_hero.png" class="hero-img" alt="Student">
+            <div class="circle-bg"></div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-container glass-panel">
+            <h3>ค้นหาสถานประกอบการ</h3>
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="ค้นหาชื่อบริษัท, ตำแหน่งงาน (เช่น Web Developer)...">
+                <a routerLink="/companies" class="btn-search">ค้นหา</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits / Process -->
+    <section class="benefits-section">
+        <div class="section-header">
+            <h2>ขั้นตอนการ <span class="highlight-purple">ฝึกงาน</span></h2>
+            <p>ง่ายๆ เพียง 4 ขั้นตอนสู่ความสำเร็จ</p>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="benefit-card yellow">
+                <div class="icon-box">📝</div>
+                <h4>1. ลงทะเบียน</h4>
+                <p>นักศึกษายื่นคำร้องและเตรียมเอกสารผ่านระบบ</p>
+            </div>
+            <div class="benefit-card pink">
+                <div class="icon-box">🏢</div>
+                <h4>2. เลือกสถานประกอบการ</h4>
+                <p>ค้นหาและสมัครงานในตำแหน่งที่สนใจ</p>
+            </div>
+            <div class="benefit-card purple">
+                <div class="icon-box">⏳</div>
+                <h4>3. รอพิจารณา</h4>
+                <p>สถานประกอบการและอาจารย์พิจารณาอนุมัติ</p>
+            </div>
+            <div class="benefit-card blue">
+                <div class="icon-box">✅</div>
+                <h4>4. เริ่มฝึกงาน</h4>
+                <p>บันทึกเวลาและการทำงานผ่านระบบรายวัน</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="calendar-section">
+        <div class="calendar-container glass-panel">
+            <div class="calendar-content">
+                <div class="calendar-header">
+                    <h2><span class="highlight">ปฏิทิน</span> การฝึกงาน</h2>
+                    <p>ติดตามกำหนดการสำคัญเพื่อไม่ให้พลาดโอกาส</p>
+
+                    <div class="key-dates">
+                        <div class="date-item">
+                            <i class="pi pi-calendar text-primary"></i>
+                            <div>
+                                <strong>1 ม.ค. - 28 ก.พ.</strong>
+                                <span>เปิดรับสมัครนักศึกษาฝึกงาน</span>
+                            </div>
+                        </div>
+                        <div class="date-item">
+                            <i class="pi pi-check-circle text-success"></i>
+                            <div>
+                                <strong>15 มี.ค.</strong>
+                                <span>ประกาศรายชื่อผู้ผ่านการคัดเลือก</span>
+                            </div>
+                        </div>
+                        <div class="date-item">
+                            <i class="pi pi-briefcase text-warning"></i>
+                            <div>
+                                <strong>1 มิ.ย.</strong>
+                                <span>เริ่มปฏิบัติงานสหกิจศึกษา</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="calendar-wrapper">
+                    <p-datepicker [inline]="true" [ngModel]="currentDate" styleClass="landing-calendar"></p-datepicker>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News / Announcements Section -->
+    <section class="news-section">
+        <div class="section-header-left">
+            <h2>ข่าวประชาสัมพันธ์ <span class="highlight-pink">ล่าสุด</span></h2>
+            <p>ติดตามประกาศและข่าวสารสำคัญจากภาควิชา</p>
+        </div>
+
+        <div class="news-track" *ngIf="infos.length > 0">
+            <div *ngFor="let info of infos" class="news-card">
+                <div class="news-tag" [ngClass]="getCategoryClass(info.category)">{{ info.category }}</div>
+                <h3 class="news-title">{{ info.title }}</h3>
+                <p class="news-excerpt">{{ info.detail }}</p>
+                <div class="news-footer">
+                    <div class="author">
+                        <div class="author-img">📢</div>
+                        <span>ฝ่ายฝึกงาน</span>
+                    </div>
+                    <span class="date">{{ info.created_at | date:'dd MMM yyyy' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="infos.length === 0" class="empty-news">
+            <p>ยังไม่มีประกาศข่าวสารในขณะนี้</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">INTERNHUB</div>
+            <div class="footer-links">
+                <span>© 2026 Computer Science, CMRU</span>
+            </div>
+        </div>
+    </footer>
+</div>

@@ -90,4 +90,13 @@ export class InternshipService {
   getInternshipStatus(id: number): Observable<InternshipRequest> {
     return this.getRequest(id);
   }
+
+  submitReport(id: number, finalReport: File, presentation?: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('final_report', finalReport);
+    if (presentation) {
+      formData.append('presentation', presentation);
+    }
+    return this.http.post(`${this.apiUrl}/${id}/final-report`, formData);
+  }
 }

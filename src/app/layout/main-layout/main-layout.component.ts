@@ -2,21 +2,17 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent, SidebarComponent],
+  imports: [CommonModule, RouterModule, NavbarComponent],
   template: `
     <div class="layout-container">
-      <app-navbar (toggleSidebar)="sidebarVisible = !sidebarVisible"></app-navbar>
-      <div class="layout-content">
-        <app-sidebar [(visible)]="sidebarVisible"></app-sidebar>
-        <main class="main-content glass-panel">
-          <router-outlet></router-outlet>
-        </main>
-      </div>
+      <app-navbar></app-navbar>
+      <main class="main-content">
+        <router-outlet></router-outlet>
+      </main>
     </div>
   `,
   styles: [`
@@ -27,23 +23,13 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
       flex-direction: column;
     }
 
-    .layout-content {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-
     .main-content {
       flex: 1;
       padding: 2rem;
       overflow-y: auto;
-      background: white;
-      position: relative;
-      margin: 20px;
-      margin-left: 0;
-      border-radius: 16px;
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--border-color);
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
     }
 
     /* Scrollbar Styling */
@@ -56,15 +42,14 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
     }
 
     .main-content::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: var(--border-color);
       border-radius: 4px;
     }
 
     .main-content::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+      background: var(--text-muted);
     }
   `]
 })
 export class MainLayoutComponent {
-  sidebarVisible = true;
 }

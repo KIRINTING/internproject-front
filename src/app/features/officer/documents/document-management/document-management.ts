@@ -97,4 +97,12 @@ export class DocumentManagement implements OnInit {
     // So we need public url.
     return `http://localhost:8000/storage/${path}`;
   }
+  getBadgeClass(type: string): string {
+    switch (type) {
+      case 'form': return 'badge-primary';
+      case 'manual': return 'badge-success';
+      case 'announcement': return 'badge-warning';
+      default: return 'badge-secondary';
+    }
+  }
 }

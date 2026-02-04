@@ -15,15 +15,17 @@ import { ConfirmationService } from 'primeng/api';
     <p-confirmpopup></p-confirmpopup>
     <header class="navbar glass-panel">
       <div class="nav-left">
-          <button pButton icon="pi pi-bars" (click)="toggleSidebar.emit()" class="p-button-text p-button-rounded mr-2 menu-btn"></button>
           <div class="nav-brand">
-            <h1>Intern CMRU</h1>
+            <i class="pi pi-code brand-icon"></i>
+            <h1>INTERN <span class="highlight">CMRU</span></h1>
           </div>
       </div>
 
       <nav class="nav-links">
         <ng-container *ngIf="(currentUser$ | async)?.role === 'student'">
             <a routerLink="/dashboard" routerLinkActive="active">หน้าหลัก</a>
+            <a routerLink="/training/criteria" routerLinkActive="active">ตรวจสอบเกณฑ์</a>
+            <a routerLink="/training/hours" routerLinkActive="active">บันทึกชั่วโมงฝึกงาน</a>
             <a routerLink="/student-info" routerLinkActive="active">ข้อมูลของนักศึกษา</a>
             <a routerLink="/contact" routerLinkActive="active">ติดต่อเจ้าหน้าที่</a>
         </ng-container>
@@ -55,11 +57,9 @@ import { ConfirmationService } from 'primeng/api';
       align-items: center;
       padding: 0 1.5rem;
       margin-bottom: 20px;
-      border-radius: 12px;
       height: 70px;
-      background: white;
-      box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-color);
+      /* Background handled by glass-panel now */
     }
     
     .nav-left {
@@ -68,10 +68,28 @@ import { ConfirmationService } from 'primeng/api';
         gap: 1rem;
     }
 
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      font-size: 1.5rem;
+      color: var(--primary-light);
+    }
+
     .nav-brand h1 {
       font-size: 1.5rem;
       margin: 0;
-      color: var(--primary);
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -1px;
+      font-weight: 700;
+    }
+
+    .highlight {
+      color: var(--primary-light);
     }
 
     .nav-links {
@@ -79,7 +97,6 @@ import { ConfirmationService } from 'primeng/api';
       gap: 2rem;
     }
     
-    /* Hide nav links on small screens if needed, but keeping simple for now */
     @media (max-width: 768px) {
         .nav-links { display: none; }
     }
@@ -93,11 +110,12 @@ import { ConfirmationService } from 'primeng/api';
     }
 
     .nav-links a:hover {
-      color: var(--primary);
+      color: var(--primary-light);
+      text-shadow: 0 0 8px var(--primary-glow);
     }
 
     .nav-links a.active {
-      color: var(--primary);
+      color: var(--primary-light);
       font-weight: 600;
     }
     
@@ -108,7 +126,8 @@ import { ConfirmationService } from 'primeng/api';
         left: 0;
         width: 100%;
         height: 2px;
-        background: var(--primary);
+        background: var(--primary-light);
+        box-shadow: 0 0 10px var(--primary);
         border-radius: 2px;
     }
 
@@ -132,20 +151,23 @@ import { ConfirmationService } from 'primeng/api';
 
     .user-role {
       font-size: 0.75rem;
-      color: var(--text-muted);
+      color: var(--text-dim);
     }
 
     .btn-sm {
       padding: 6px 16px;
       font-size: 0.85rem;
       border: 1px solid var(--border-color);
-      color: var(--text-muted);
+      color: var(--text-main);
+      background: rgba(255,255,255,0.05);
+      border-radius: 4px;
+      cursor: pointer;
     }
     
     .btn-sm:hover {
-      color: #ef4444;
-      background: #fef2f2;
-      border-color: #fee2e2;
+      color: var(--danger);
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.3);
     }
     
     .menu-btn {
@@ -154,7 +176,6 @@ import { ConfirmationService } from 'primeng/api';
   `]
 })
 export class NavbarComponent {
-  @Output() toggleSidebar = new EventEmitter<void>();
   currentUser$;
 
   constructor(

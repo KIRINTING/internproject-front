@@ -50,8 +50,7 @@ interface MenuItem {
   styles: [`
     .sidebar {
       width: 260px;
-      /* ... existing styles ... */
-      background: var(--bg-surface);
+      background: var(--bg-card);
       border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
@@ -61,7 +60,7 @@ interface MenuItem {
       position: relative;
       height: 100%;
     }
-    /* ... rest of existing styles ... */
+
     .sidebar.collapsed {
       width: 70px;
     }
@@ -73,7 +72,7 @@ interface MenuItem {
       justify-content: center;
       padding: 0 24px;
       border-bottom: 1px solid var(--border-color);
-      background: var(--primary);
+      background: rgba(59, 130, 246, 0.1); 
       transition: padding 0.3s ease;
     }
 
@@ -84,14 +83,16 @@ interface MenuItem {
     .logo-section h2 {
       font-size: 1.25rem;
       font-weight: 700;
-      color: white;
+      color: var(--primary-light);
       margin: 0;
       white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -1px;
     }
 
     .logo-section i {
       font-size: 1.5rem;
-      color: white;
+      color: var(--primary-light);
     }
 
     .sidebar-nav {
@@ -115,7 +116,8 @@ interface MenuItem {
       cursor: pointer;
       border-radius: 8px;
       transition: all 0.2s ease;
-      background: rgba(0, 0, 0, 0.03);
+      background: transparent;
+      color: var(--text-muted);
     }
 
     .sidebar.collapsed .menu-item-header {
@@ -124,12 +126,14 @@ interface MenuItem {
     }
 
     .menu-item-header:hover {
-      background: rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
     }
 
     .menu-item-header.active {
-      background: var(--primary-light);
-      color: var(--primary);
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--primary-light);
+      border: 1px solid rgba(59, 130, 246, 0.1);
     }
 
     .menu-title {
@@ -176,14 +180,15 @@ interface MenuItem {
     }
 
     .submenu-link:hover {
-      color: var(--primary);
-      background-color: rgba(0,0,0,0.02);
+      color: var(--primary-light);
+      background-color: rgba(255,255,255,0.03);
     }
 
     .submenu-link.active-link {
-      color: var(--primary);
+      color: var(--primary-light);
       font-weight: 500;
-      background-color: var(--primary-light);
+      background-color: rgba(59, 130, 246, 0.1);
+      border-right: 2px solid var(--primary);
     }
 
     .icon {
@@ -192,7 +197,7 @@ interface MenuItem {
 
     /* Scrollbar */
     .sidebar-nav::-webkit-scrollbar {
-      width: 6px;
+      width: 4px;
     }
 
     .sidebar-nav::-webkit-scrollbar-track {
@@ -200,7 +205,7 @@ interface MenuItem {
     }
 
     .sidebar-nav::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: var(--border-color);
       border-radius: 3px;
     }
 
@@ -212,6 +217,7 @@ interface MenuItem {
         top: 0;
         height: 100vh;
         z-index: 1000;
+        background: var(--bg-card);
       }
       
       .sidebar.collapsed {

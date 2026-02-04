@@ -384,7 +384,7 @@ export class ProcessTrackerComponent {
       title: 'ฝึกงาน',
       icon: '🎓',
       status: 'pending',
-      route: '/training/evidence'
+      route: '/training/hours'
     },
     {
       id: 5,
@@ -433,16 +433,16 @@ export class ProcessTrackerComponent {
         break;
 
       default:
-        // No internship request yet - only stage 1 in progress
-        this.stages[0].status = 'in-progress';
-        this.stages[1].status = 'pending';
+        // No internship request yet - allow access to first 2 stages
+        this.stages[0].status = 'completed'; // Assume documents are viewable/ready
+        this.stages[1].status = 'in-progress'; // Allow submitting request
         this.stages[2].status = 'pending';
         break;
     }
   }
 
   onStageClick(stage: ProcessStage): void {
-    if (stage.route && (stage.status === 'completed' || stage.status === 'in-progress')) {
+    if (stage.route) {
       this.router.navigate([stage.route]);
     }
   }

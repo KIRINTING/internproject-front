@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { InternshipService, InternshipRequest } from './services/internship';
 import { AuthService } from '../../auth/auth.service';
 import { environment } from '../../../environments/environment.development';
@@ -7,7 +8,7 @@ import { environment } from '../../../environments/environment.development';
 @Component({
   selector: 'app-internship-results',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
     <div class="results-container">
       <div class="page-header">

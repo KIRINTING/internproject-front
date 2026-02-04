@@ -1,221 +1,259 @@
-.dashboard-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.welcome-section {
+/* Page Header */
+.page-header {
     margin-bottom: 24px;
 }
 
-.welcome-section h2 {
-    margin: 0 0 8px 0;
-    color: var(--primary-dark);
-}
-
-.welcome-section p {
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1e293b;
     margin: 0;
-    color: var(--text-muted);
 }
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 24px;
-    margin-bottom: 32px;
-}
-
-.stat-card {
-    background: var(--bg-surface);
-    border-radius: 12px;
-    padding: 24px;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.2s;
-    border: 1px solid var(--border-color);
-}
-
-.stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-}
-
-.stat-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-}
-
-.stat-card.pending .stat-icon {
-    background: #fffbeb;
-    color: #f59e0b;
-}
-
-.stat-card.approved .stat-icon {
-    background: var(--primary-light);
-    color: var(--primary);
-}
-
-.stat-card.rejected .stat-icon {
-    background: #fef2f2;
-    color: #ef4444;
-}
-
-.stat-card.total .stat-icon {
-    background: var(--bg-hover);
-    color: var(--text-muted);
-}
-
-.stat-content {
-    flex: 1;
-}
-
-.stat-content h3 {
-    margin: 0 0 4px 0;
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-.stat-value {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: var(--text-main);
-    line-height: 1.2;
-}
-
-.stat-desc {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+.page-subtitle {
+    color: #64748b;
     margin-top: 4px;
 }
 
-.recent-section {
-    background: var(--bg-surface);
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-color);
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
-.section-header {
+/* Small Box (Admin LTE Style) */
+.small-box {
+    border-radius: 8px;
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    color: white;
+}
+
+.small-box>.inner {
+    padding: 20px;
+}
+
+.small-box h3 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    white-space: nowrap;
+    padding: 0;
+}
+
+.small-box p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.small-box .icon {
+    transition: all .3s linear;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 0;
+    font-size: 4rem;
+    color: rgba(0, 0, 0, 0.15);
+}
+
+.small-box:hover .icon {
+    font-size: 4.5rem;
+}
+
+.small-box-footer {
+    position: relative;
+    text-align: center;
+    padding: 6px 0;
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+
+.small-box-footer:hover {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+/* Background Colors */
+.bg-info {
+    background-color: #3b82f6 !important;
+}
+
+/* Blue */
+.bg-success {
+    background-color: #10b981 !important;
+}
+
+/* Green */
+.bg-warning {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+/* Amber/Yellow */
+.bg-danger {
+    background-color: #ef4444 !important;
+}
+
+/* Red */
+
+/* Card Styles */
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
+}
+
+.card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
 }
 
-.section-header h3 {
+.card-title {
     margin: 0;
-    color: var(--text-main);
-}
-
-.section-header a {
-    color: var(--primary);
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.recent-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.recent-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 12px;
-    border: 1px solid var(--bg-hover);
-    border-radius: 8px;
-    transition: background-color 0.2s;
-}
-
-.recent-item:hover {
-    background-color: var(--bg-hover);
-}
-
-.item-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.item-icon.pending {
-    background: #fffbeb;
-    color: #f59e0b;
-}
-
-.item-icon.officer_approved {
-    background: var(--primary-light);
-    color: var(--primary);
-}
-
-.item-icon.dean_approved {
-    background: #d1fae5;
-    color: #10b981;
-}
-
-.item-icon.rejected {
-    background: #fef2f2;
-    color: #ef4444;
-}
-
-.item-info {
-    flex: 1;
-}
-
-.item-title {
+    font-size: 1.1rem;
     font-weight: 600;
-    color: var(--text-main);
-    font-size: 0.95rem;
+    color: #334155;
+    display: flex;
+    align-items: center;
 }
 
-.item-meta {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 2px;
+.card-title i {
+    margin-right: 8px;
+    color: #64748b;
 }
 
-.item-status {
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    border-radius: 12px;
+.btn-tool {
+    color: #3b82f6;
+    font-size: 0.9rem;
     font-weight: 500;
+    text-decoration: none;
 }
 
-.item-status.pending {
-    background: #fffbeb;
-    color: #92400e;
+.btn-tool:hover {
+    text-decoration: underline;
 }
 
-.item-status.officer_approved {
-    background: var(--primary-light);
-    color: var(--primary);
+/* Table Styles */
+.table-responsive {
+    overflow-x: auto;
 }
 
-.item-status.dean_approved {
-    background: #d1fae5;
-    color: #065f46;
+.table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.item-status.rejected {
-    background: #fef2f2;
-    color: #b91c1c;
+.table th {
+    background: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 24px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.empty-state {
+.table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.font-bold {
+    font-weight: 600;
+}
+
+.text-muted {
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.text-center {
     text-align: center;
-    color: var(--text-muted);
-    padding: 24px;
+}
+
+.mr-2 {
+    margin-right: 0.5rem;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+/* Status Badges */
+.badge {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-pending {
+    background-color: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #ffedd5;
+}
+
+.badge-approved {
+    background-color: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #dcfce7;
+}
+
+.badge-rejected {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fee2e2;
+}
+
+/* Buttons */
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
+.btn-outline {
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: #475569;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-outline:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    color: #1e293b;
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
 }

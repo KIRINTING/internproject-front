@@ -77,11 +77,15 @@ import { Router } from '@angular/router';
   styles: [`
     .login-wrapper {
       min-height: 100vh;
-      background: linear-gradient(135deg, #a8b5e8 0%, #c5b8e8 100%);
+      background-color: var(--bg-main);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
+      /* Add a subtle grid or tech background pattern */
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 20%);
     }
 
     .login-container {
@@ -91,7 +95,7 @@ import { Router } from '@angular/router';
       background: white;
       border-radius: 24px;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
       min-height: 600px;
     }
 
@@ -101,7 +105,8 @@ import { Router } from '@angular/router';
       padding: 3rem 2.5rem;
       display: flex;
       flex-direction: column;
-      background: white;
+      background: #758195; /* Cool Grey */
+      position: relative;
     }
 
     .university-logo {
@@ -114,18 +119,20 @@ import { Router } from '@angular/router';
     .logo-icon {
       width: 40px;
       height: 40px;
-      background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     .university-logo span {
-      font-size: 0.95rem;
-      color: #333;
+      font-size: 1rem;
+      color: white;
       font-weight: 500;
+      font-family: 'Prompt', sans-serif;
     }
 
     .login-content {
@@ -135,11 +142,12 @@ import { Router } from '@angular/router';
     }
 
     .login-title {
-      font-size: 1.75rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: #1a1a1a;
+      color: white;
       margin-bottom: 1.5rem;
       line-height: 1.3;
+      letter-spacing: -0.5px;
     }
 
     .login-form {
@@ -156,46 +164,52 @@ import { Router } from '@angular/router';
       display: block;
       margin-bottom: 0.5rem;
       font-size: 0.9rem;
-      color: #333;
+      color: #e2e8f0; /* Light Grey */
       font-weight: 500;
     }
 
     .required {
-      color: #e74c3c;
+      color: var(--danger);
       margin-left: 2px;
     }
 
     .form-input {
       width: 100%;
       padding: 0.875rem 1rem;
-      border: 1.5px solid #e0e0e0;
+      border: 1px solid transparent;
       border-radius: 8px;
       font-size: 0.95rem;
       transition: all 0.2s ease;
-      background: white;
+      background: #f1f5f9; /* Very Light Grey/White */
+      color: #1f2937; /* Dark Text */
       appearance: none;
+    }
+    
+    .form-input::placeholder {
+      color: #94a3b8;
     }
 
     .form-input:focus {
       outline: none;
-      border-color: #7b8bc7;
-      box-shadow: 0 0 0 3px rgba(123, 139, 199, 0.1);
+      border-color: #3b82f6;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
     }
 
     .error-msg {
-      background: #fee;
-      color: #c33;
+      background: rgba(239, 68, 68, 0.1);
+      color: #fca5a5;
       padding: 0.75rem;
       border-radius: 8px;
       font-size: 0.875rem;
       margin-bottom: 1rem;
-      border: 1px solid #fcc;
+      border: 1px solid rgba(239, 68, 68, 0.2);
     }
 
     .submit-button {
       width: 100%;
-      padding: 0.875rem;
-      background: linear-gradient(135deg, #7b8bc7 0%, #9ba5d4 100%);
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
       border: none;
       border-radius: 8px;
@@ -204,29 +218,31 @@ import { Router } from '@angular/router';
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: auto;
+      box-shadow: 0 4px 6px -1px var(--primary-glow);
     }
 
     .submit-button:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(123, 139, 199, 0.3);
+      box-shadow: 0 8px 15px -1px var(--primary-glow);
     }
 
     .submit-button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+      filter: grayscale(100%);
     }
 
     .footer-text {
       text-align: center;
       font-size: 0.8rem;
-      color: #999;
+      color: #cbd5e1;
       margin-top: 1.5rem;
     }
 
     /* Right Panel - Illustration */
     .illustration-panel {
       flex: 1;
-      background: linear-gradient(135deg, #7b8bc7 0%, #b8a8d8 50%, #d4a8c8 100%);
+      background: #6a768a; /* Blue Grey */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -248,6 +264,7 @@ import { Router } from '@angular/router';
       margin: 1rem;
       display: inline-block;
       animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 10px rgba(59,130,246,0.3));
     }
 
     .tech-icon:nth-child(2) {
@@ -261,14 +278,15 @@ import { Router } from '@angular/router';
     .tech-text {
       font-size: 2rem;
       font-weight: 700;
-      color: white;
+      color: var(--text-main);
       margin-top: 2rem;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+      font-family: 'JetBrains Mono', monospace;
     }
 
     .tech-subtext {
       font-size: 1.1rem;
-      color: rgba(255, 255, 255, 0.9);
+      color: var(--primary-light);
       margin-top: 0.5rem;
     }
 
@@ -287,10 +305,11 @@ import { Router } from '@angular/router';
       position: absolute;
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
       border-radius: 50%;
       top: -100px;
       right: -100px;
+      opacity: 0.2;
     }
 
     .illustration-panel::after {
@@ -298,10 +317,11 @@ import { Router } from '@angular/router';
       position: absolute;
       width: 300px;
       height: 300px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+      background: radial-gradient(circle, var(--secondary-glow) 0%, transparent 70%);
       border-radius: 50%;
       bottom: -50px;
       left: -50px;
+      opacity: 0.2;
     }
 
     /* Responsive */
@@ -313,6 +333,8 @@ import { Router } from '@angular/router';
       .illustration-panel {
         min-height: 250px;
         order: -1;
+        border-left: none;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
       }
 
       .login-panel {

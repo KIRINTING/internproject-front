@@ -1,20 +1,28 @@
 <div class="p-fluid">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="field mb-3">
-            <label for="date" class="block font-bold mb-2">Date</label>
-            <p-datePicker id="date" formControlName="date" [showIcon]="true" dateFormat="yy-mm-dd"></p-datePicker>
+            <label for="log_date" class="block font-bold mb-2">Date</label>
+            <p-datePicker id="log_date" formControlName="log_date" [showIcon]="true"
+                dateFormat="yy-mm-dd"></p-datePicker>
         </div>
 
         <div class="field mb-3">
-            <label for="work_details" class="block font-bold mb-2">Work Details</label>
-            <textarea id="work_details" pTextarea formControlName="work_details" rows="5" class="w-full"></textarea>
+            <label for="hours_worked" class="block font-bold mb-2">Hours Worked</label>
+            <input id="hours_worked" type="number" pInputText formControlName="hours_worked" min="0.5" max="24"
+                step="0.5" />
+        </div>
+
+        <div class="field mb-3">
+            <label for="work_description" class="block font-bold mb-2">Work Description</label>
+            <textarea id="work_description" pTextarea formControlName="work_description" rows="5"
+                class="w-full"></textarea>
         </div>
 
         <div class="field mb-3">
             <label class="block font-bold mb-2">Image (Optional)</label>
             <p-fileUpload mode="basic" chooseLabel="Choose Image" accept="image/*" [maxFileSize]="2000000"
                 (onSelect)="onFileSelect($event)" [auto]="false"></p-fileUpload>
-            <small *ngIf="logToEdit?.image_path" class="block mt-2">Current image exists</small>
+            <small *ngIf="logToEdit?.photo_url" class="block mt-2">Current image exists</small>
         </div>
 
         <div class="flex justify-content-end gap-2 mt-4">

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { InfoService, Info } from '../officer/services/info.service';
 import { ProcessTrackerComponent } from './components/process-tracker.component';
-import { InternshipService } from '../internship/services/internship';
+import { InternshipService, InternshipRequest } from '../internship/services/internship';
 import { AuthService } from '../../auth/auth.service';
 
 interface CalendarDay {
@@ -27,7 +27,42 @@ interface CalendarDay {
       </div>
 
       <!-- Process Tracker -->
-      <app-process-tracker [internshipStatus]="internshipStatus"></app-process-tracker>
+      <app-process-tracker [internshipStatus]="internshipData?.status || null"></app-process-tracker>
+
+      <!-- Internship Info Card -->
+      <div class="internship-info-card glass-panel animate-fade-in" *ngIf="internshipData && (internshipData.status === 'dean_approved' || internshipData.status === 'officer_approved')" style="animation-delay: 0.05s">
+        <div class="section-header">
+           <h3><span class="icon">🏢</span> ข้อมูลสถานประกอบการ</h3>
+        </div>
+        <div class="info-content">
+            <div class="info-row">
+                <div class="info-group">
+                    <label>สถานประกอบการ</label>
+                    <p>{{ internshipData.company_name }}</p>
+                </div>
+                <div class="info-group">
+                    <label>ตำแหน่งงาน</label>
+                    <p>{{ internshipData.position }}</p>
+                </div>
+             </div>
+             <div class="info-row">
+                <div class="info-group full-width">
+                    <label>ที่อยู่</label>
+                    <p>{{ internshipData.company_address }}</p>
+                </div>
+             </div>
+             <div class="info-row">
+                <div class="info-group">
+                    <label>ผู้ประสานงาน</label>
+                    <p>{{ internshipData.coordinator_name }} ({{ internshipData.coordinator_phone }})</p>
+                </div>
+                <div class="info-group">
+                     <label>เบอร์โทรศัพท์บริษัท</label>
+                    <p>{{ internshipData.company_phone }}</p>
+                </div>
+             </div>
+        </div>
+      </div>
 
       <div class="dashboard-grid">
         <!-- News Section -->
@@ -88,15 +123,56 @@ interface CalendarDay {
       gap: 2rem;
     }
 
-    .welcome-banner {
-    }
-
     .welcome-banner h2 {
       font-size: 2rem;
       margin-bottom: 0.5rem;
+      color: var(--text-main);
     }
 
     .welcome-banner p {
+      color: var(--text-muted);
+    }
+
+    /* Internship Info Card */
+    .internship-info-card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        background: white;
+    }
+    
+    .info-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .info-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .info-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .info-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .info-group label {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+
+    .info-group p {
+        font-size: 1.1rem;
+        color: var(--primary);
+        font-weight: 600;
+        margin: 0;
     }
 
     .dashboard-grid {
@@ -109,6 +185,10 @@ interface CalendarDay {
       .dashboard-grid {
         grid-template-columns: 1fr;
       }
+      .info-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
     }
 
     .section-header {
@@ -117,13 +197,14 @@ interface CalendarDay {
       align-items: center;
       margin-bottom: 1.5rem;
       padding-bottom: 1rem;
-      border-bottom: 2px solid var(--glass-border);
+      border-bottom: 2px solid var(--border-color);
     }
 
     .section-header h3 {
       display: flex;
       align-items: center;
       gap: 8px;
+      color: var(--text-main);
     }
 
     .icon {
@@ -140,16 +221,19 @@ interface CalendarDay {
       display: flex;
       gap: 1rem;
       padding: 1.5rem;
-      background: rgba(255, 255, 255, 0.5);
+      background: white;
+      border: 1px solid var(--border-color);
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--shadow-sm);
       transition: all 0.3s ease;
       cursor: pointer;
     }
 
     .news-card:hover {
-      background: rgba(255, 255, 255, 0.8);
+      background: white;
       transform: translateX(5px);
+      border-color: var(--primary-light);
+      box-shadow: var(--shadow-md);
     }
 
     .news-date {
@@ -157,56 +241,57 @@ interface CalendarDay {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: rgba(66, 133, 244, 0.1);
+      background: var(--bg-hover);
       padding: 0.75rem 1rem;
       border-radius: 12px;
       min-width: 70px;
-      color: #4285d4ff;
+      color: var(--primary);
+      border: 1px solid var(--border-color);
     }
 
     .news-date .date-day { font-size: 1.5rem; font-weight: 700; }
     .news-date .date-month { font-size: 0.875rem; text-transform: uppercase; }
 
-    .news-content {
-    }
-
     .news-content h4 {
       margin: 0;
       font-size: 1.125rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
     }
 
     .news-content p {
       margin: 0;
       line-height: 1.6;
-      color: rgba(0, 0, 0, 0.7);
+      color: var(--text-muted);
       font-size: 0.9rem;
     }
 
     .badge {
       font-size: 0.75rem;
-      padding: 4px 8px;
-      border-radius: 12px;
+      padding: 4px 10px;
+      border-radius: 99px;
       color: white;
       font-weight: 600;
       display: inline-block;
+      margin-bottom: 0.5rem;
     }
 
     .badge-announce {
-      background: linear-gradient(135deg, #4285f4 0%, #1967d2 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     }
 
     .badge-important {
-      background: #ea4335;
+      background: var(--danger);
     }
 
     .badge-guide {
-      background: linear-gradient(135deg, #34a853 0%, #0d652d 100%);
+      background: var(--success);
     }
 
     .no-news {
       text-align: center;
       padding: 2rem;
-      color: rgba(0, 0, 0, 0.5);
+      color: var(--text-muted);
     }
 
     /* Calendar Styles */
@@ -234,6 +319,7 @@ interface CalendarDay {
     .calendar-header span {
       font-size: 1.125rem;
       font-weight: 600;
+      color: var(--primary);
     }
 
     .calendar-days {
@@ -248,23 +334,28 @@ interface CalendarDay {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
       transition: all 0.2s ease;
       position: relative;
+      background: white;
+      border: 1px solid transparent;
     }
 
     .calendar-day:hover {
-      background: rgba(66, 133, 244, 0.1);
+      background: var(--bg-hover);
+      border-color: var(--primary-light);
     }
 
     .calendar-day.today {
-      background: #4285f4;
+      background: var(--primary);
       color: white;
+      box-shadow: 0 4px 10px var(--primary-glow);
     }
 
     .calendar-day.other-month {
       opacity: 0.3;
+      background: transparent;
     }
 
     .day-number {
@@ -279,7 +370,7 @@ interface CalendarDay {
     .event-dot {
       width: 4px;
       height: 4px;
-      background: #ea4335;
+      background: var(--secondary);
       border-radius: 50%;
     }
   `]
@@ -289,7 +380,7 @@ export class DashboardComponent implements OnInit {
   currentMonth = new Date();
   weekdays = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
   calendarDays: CalendarDay[] = [];
-  internshipStatus: string | null = null;
+  internshipData: InternshipRequest | null = null;
 
   constructor(
     private infoService: InfoService,
@@ -326,8 +417,8 @@ export class DashboardComponent implements OnInit {
         next: (response) => {
           console.log('Internship response:', response);
           if (response.success && response.data) {
-            this.internshipStatus = response.data.status;
-            console.log('Internship status set to:', this.internshipStatus);
+            this.internshipData = response.data;
+            console.log('Internship data loaded:', this.internshipData);
           } else {
             console.log('No internship data in response');
           }
@@ -335,7 +426,7 @@ export class DashboardComponent implements OnInit {
         error: (error) => {
           // No internship request yet - this is normal for new students
           console.log('Error or no internship request found:', error);
-          this.internshipStatus = null;
+          this.internshipData = null;
         }
       });
     } else {

@@ -41,21 +41,24 @@ export class DailyLogFormComponent implements OnChanges {
     private messageService: MessageService
   ) {
     this.form = this.fb.group({
-      date: [new Date(), Validators.required],
-      work_details: ['', Validators.required]
+      log_date: [new Date(), Validators.required],
+      hours_worked: [8, [Validators.required, Validators.min(0.5), Validators.max(24)]],
+      work_description: ['', Validators.required]
     });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['logToEdit'] && this.logToEdit) {
       this.form.patchValue({
-        date: new Date(this.logToEdit.date),
-        work_details: this.logToEdit.work_details
+        log_date: new Date(this.logToEdit.log_date),
+        hours_worked: this.logToEdit.hours_worked,
+        work_description: this.logToEdit.work_description
       });
     } else if (changes['logToEdit'] && !this.logToEdit) {
       this.form.reset({
-        date: new Date(),
-        work_details: ''
+        log_date: new Date(),
+        hours_worked: 8,
+        work_description: ''
       });
       this.selectedFile = null;
     }
@@ -72,19 +75,20 @@ export class DailyLogFormComponent implements OnChanges {
 
     this.loading = true;
     const formData = new FormData();
-    formData.append('student_id', this.studentId);
+    formData.append('student_code', this.studentId);
 
-    const date = this.form.get('date')?.value;
+    const date = this.form.get('log_date')?.value;
     // Format date as YYYY-MM-DD
     const dateStr = date instanceof Date
       ? date.toISOString().split('T')[0]
       : date;
 
-    formData.append('date', dateStr);
-    formData.append('work_details', this.form.get('work_details')?.value);
+    formData.append('log_date', dateStr);
+    formData.append('hours_worked', this.form.get('hours_worked')?.value.toString());
+    formData.append('work_description', this.form.get('work_description')?.value);
 
     if (this.selectedFile) {
-      formData.append('image', this.selectedFile);
+      formData.append('photo', this.selectedFile);
     }
 
     const request$ = this.logToEdit

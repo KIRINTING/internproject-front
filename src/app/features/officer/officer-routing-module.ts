@@ -17,7 +17,11 @@ const routes: Routes = [
       { path: 'requests', component: RequestListComponent },
       { path: 'requests/:id', component: RequestDetailComponent },
       { path: 'news', component: NewsListComponent },
-      { path: 'reports', loadComponent: () => import('./reports/reports.component').then(m => m.ReportsComponent) }
+      { path: 'reports', loadComponent: () => import('./reports/reports.component').then(m => m.ReportsComponent) },
+      { path: 'documents', loadComponent: () => import('./documents/document-management/document-management').then(m => m.DocumentManagement) },
+      { path: 'monitor', loadComponent: () => import('./monitor/monitor-list/monitor-list.component').then(m => m.MonitorListComponent) },
+      { path: 'monitor/:id', loadComponent: () => import('./monitor/monitor-detail/monitor-detail.component').then(m => m.MonitorDetailComponent) },
+      { path: 'students', loadComponent: () => import('./student-management/student-management.component').then(m => m.StudentManagementComponent) }
     ]
   }
 ];

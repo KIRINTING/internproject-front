@@ -2,22 +2,51 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../auth/auth.service';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
+import { OfficerSidebarComponent } from './officer-sidebar/officer-sidebar.component';
+import { OfficerTopbarComponent } from './officer-topbar/officer-topbar.component';
 
 @Component({
     selector: 'app-officer-layout',
     standalone: true,
-    imports: [CommonModule, RouterModule, ButtonModule, RippleModule, ConfirmPopupModule],
+    imports: [
+        CommonModule,
+        RouterModule,
+        ConfirmPopupModule,
+        OfficerSidebarComponent,
+        OfficerTopbarComponent
+    ],
     providers: [ConfirmationService],
-    templateUrl: './officer-layout.component.html',
+    template: `
+        <div class="admin-wrapper" [class.sidebar-collapsed]="isSidebarCollapsed">
+            <p-confirmpopup></p-confirmpopup>
+
+            <!-- Sidebar -->
+            <app-officer-sidebar 
+                [collapsed]="isSidebarCollapsed" 
+                [pendingCount]="pendingCount">
+            </app-officer-sidebar>
+
+            <div class="main-content">
+                <!-- Topbar -->
+                <app-officer-topbar 
+                    (toggle)="toggleSidebar()" 
+                    (logout)="logout()">
+                </app-officer-topbar>
+
+                <!-- Page Content -->
+                <div class="content-body">
+                    <router-outlet (activate)="onActivate($event)"></router-outlet>
+                </div>
+            </div>
+        </div>
+    `,
     styleUrls: ['./officer-layout.component.css']
 })
 export class OfficerLayoutComponent {
-    pageTitle: string = 'Dashboard';
-    sidebarVisible: boolean = true; // Start with sidebar open
+    isSidebarCollapsed = false;
+    pendingCount = 0; // Can be updated via a shared service later
 
     constructor(
         private authService: AuthService,
@@ -25,33 +54,24 @@ export class OfficerLayoutComponent {
         private confirmationService: ConfirmationService
     ) { }
 
-    onActivate(component: any) {
-        // Optional: Dynamically set title based on active component
-        if (component.title) {
-            this.pageTitle = component.title;
-        } else {
-            // Default fallback based on URL
-            const path = this.router.url.split('/').pop();
-            switch (path) {
-                case 'dashboard': this.pageTitle = 'ภาพรวมระบบ (Dashboard)'; break;
-                case 'requests': this.pageTitle = 'จัดการคำขอฝึกงาน'; break;
-                case 'news': this.pageTitle = 'จัดการข่าวสาร'; break;
-                case 'reports': this.pageTitle = 'รายงานสรุปผลการฝึกงาน'; break;
-                default: this.pageTitle = 'Officer Panel';
-            }
-        }
+    toggleSidebar() {
+        this.isSidebarCollapsed = !this.isSidebarCollapsed;
     }
 
-    logout(event: Event) {
+    onActivate(component: any) {
+        // Logic to update breadcrumbs or titles if needed
+    }
+
+    logout() {
         this.confirmationService.confirm({
-            target: event.target as EventTarget,
+            target: event?.target as EventTarget,
             message: 'คุณต้องการออกจากระบบใช่หรือไม่?',
             icon: 'pi pi-exclamation-triangle',
             acceptLabel: 'ออกจากระบบ',
             rejectLabel: 'ยกเลิก',
             accept: () => {
                 this.authService.logout();
-                this.router.navigate(['/login']);
+                this.router.navigate(['/']);
             }
         });
     }

@@ -15,6 +15,7 @@ export interface Student {
     phone: string;
     address: string;
     gpa: number;
+    cumulative_credits?: number;
 }
 
 @Injectable({

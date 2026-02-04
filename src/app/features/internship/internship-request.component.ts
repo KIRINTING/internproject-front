@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { InternshipService } from './services/internship';
 import { AuthService } from '../../auth/auth.service';
+import { StudentService } from '../student-info/student.service';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
@@ -25,7 +27,9 @@ export class InternshipRequestComponent implements OnInit {
     private fb: FormBuilder,
     private internshipService: InternshipService,
     private authService: AuthService,
-    private confirmationService: ConfirmationService
+    private studentService: StudentService,
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -68,13 +72,31 @@ export class InternshipRequestComponent implements OnInit {
   loadStudentData(): void {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser && currentUser.role === 'student') {
-      // Auto-fill student data from logged-in user
-      const studentCode = currentUser.username || '';
-      this.requestForm.patchValue({
-        student_id: studentCode, // Set both fields to the same value
-        student_code: studentCode,
-        first_name: currentUser.name?.split(' ')[0] || '',
-        last_name: currentUser.name?.split(' ')[1] || ''
+      // Fetch full student data from API
+      this.studentService.getProfile().subscribe({
+        next: (response) => {
+          if (response.success && response.data) {
+            const student = response.data;
+            // Parse Thai name to extract first and last name
+            const nameParts = student.name_th?.split(' ') || [];
+            this.requestForm.patchValue({
+              student_id: student.student_code,
+              student_code: student.student_code,
+              first_name: nameParts[0] || '',
+              last_name: nameParts.slice(1).join(' ') || '',
+              phone: student.phone || ''
+            });
+          }
+        },
+        error: (error) => {
+          console.error('Error loading student data:', error);
+          // Fallback to basic user data
+          const studentCode = currentUser.username || '';
+          this.requestForm.patchValue({
+            student_id: studentCode,
+            student_code: studentCode
+          });
+        }
       });
     }
   }
@@ -132,8 +154,8 @@ export class InternshipRequestComponent implements OnInit {
             this.selectedPhoto = null;
             this.photoPreview = null;
             this.isLoading = false;
-            this.initializeForm();
-            this.loadStudentData();
+            // Navigate to dashboard
+            this.router.navigate(['/dashboard']);
           },
           error: (error) => {
             console.error('Error submitting request:', error);

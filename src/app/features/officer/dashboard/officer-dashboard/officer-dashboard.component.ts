@@ -51,6 +51,18 @@ export class OfficerDashboardComponent implements OnInit {
         }
     }
 
+    getStatusBadgeClass(status?: string): string {
+        switch (status) {
+            case 'officer_approved':
+            case 'dean_approved':
+                return 'badge-approved';
+            case 'rejected':
+                return 'badge-rejected';
+            default:
+                return 'badge-pending';
+        }
+    }
+
     getStatusLabel(status?: string): string {
         switch (status) {
             case 'officer_approved': return 'อนุมัติแล้ว';

@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { DatePickerModule } from 'primeng/datepicker';
 import { MentorService } from '../services/mentor.service';
 import { AuthService } from '../../../auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-mentor-dashboard',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
+  selector: 'app-mentor-dashboard',
+  standalone: true,
+  imports: [CommonModule, DatePickerModule, FormsModule],
+  template: `
     <div class="dashboard-container">
       <header class="dashboard-header">
         <h1>Dashboard อาจารย์นิเทศ</h1>
@@ -18,9 +20,11 @@ import { Router } from '@angular/router';
       </header>
       
       <div class="content-wrapper">
-        <div class="section-title">
-          <h2>รายชื่อนักศึกษาในความดูแล</h2>
-        </div>
+        <div class="dashboard-grid">
+         <div class="main-content">
+          <div class="section-title">
+            <h2>รายชื่อนักศึกษาในความดูแล</h2>
+          </div>
 
         <div class="student-grid">
           <div *ngFor="let student of students" class="student-card">
@@ -55,11 +59,32 @@ import { Router } from '@angular/router';
           <div *ngIf="students.length === 0" class="no-data">
             <p>ไม่พบรายชื่อนักศึกษาในความดูแล</p>
           </div>
+          </div>
+         </div>
+
+         <!-- Sidebar with Calendar -->
+         <div class="sidebar">
+            <div class="mini-calendar-card">
+              <div class="calendar-header-mini">
+                 <i class="pi pi-calendar"></i>
+                 <span>ปฏิทินงาน</span>
+              </div>
+               <p-datepicker [inline]="true" [ngModel]="currentDate" styleClass="mini-calendar"></p-datepicker>
+            </div>
+
+            <div class="stats-card-mini">
+               <div class="stat-icon-mini">👨‍🎓</div>
+               <div class="stat-info-mini">
+                  <span class="stat-label">นักศึกษาทั้งหมด</span>
+                  <span class="stat-value">{{ students.length }} คน</span>
+               </div>
+            </div>
+         </div>
         </div>
       </div>
     </div>
   `,
-    styles: [`
+  styles: [`
     .dashboard-container {
       padding: 2rem;
       background-color: #f8f9fa;
@@ -71,6 +96,89 @@ import { Router } from '@angular/router';
       justify-content: space-between;
       align-items: center;
       margin-bottom: 2rem;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+        .sidebar { order: -1; } /* On mobile, stats/calendar on top or bottom as preferred */
+    }
+
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .mini-calendar-card {
+        background: white;
+        padding: 1rem; /* Compact padding */
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    
+    .calendar-header-mini {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eee;
+        color: #555;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+    .calendar-header-mini i { color: #4a90e2; }
+
+    /* Stats Mini Card */
+    .stats-card-mini {
+        background: white;
+        padding: 1.25rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .stat-icon-mini {
+        width: 45px;
+        height: 45px;
+        background: #e3f2fd;
+        color: #4a90e2;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+    .stat-info-mini { display: flex; flex-direction: column; }
+    .stat-label { font-size: 0.85rem; color: #888; }
+    .stat-value { font-size: 1.1rem; font-weight: 600; color: #333; }
+
+    /* Overrides for mini calendar */
+    :host ::ng-deep .mini-calendar {
+        border: none !important;
+        width: 100%;
+    }
+    :host ::ng-deep .mini-calendar .p-datepicker {
+        padding: 0;
+        width: 100%;
+    }
+    :host ::ng-deep .mini-calendar .p-datepicker table td > span {
+        width: 30px;
+        height: 30px;
+        font-size: 0.85rem;
+    }
+    :host ::ng-deep .mini-calendar .p-datepicker-header {
+        padding: 0.5rem;
     }
 
     .dashboard-header h1 {
@@ -192,33 +300,34 @@ import { Router } from '@angular/router';
   `]
 })
 export class MentorDashboardComponent implements OnInit {
-    students: any[] = [];
-    mentorName: string = '';
+  students: any[] = [];
+  mentorName: string = '';
+  currentDate = new Date();
 
-    constructor(
-        private mentorService: MentorService,
-        private authService: AuthService,
-        private router: Router
-    ) { }
+  constructor(
+    private mentorService: MentorService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
-    ngOnInit() {
-        const user = this.authService.getCurrentUser();
-        this.mentorName = user?.name || 'อาจารย์';
-        this.loadStudents();
-    }
+  ngOnInit() {
+    const user = this.authService.getCurrentUser();
+    this.mentorName = user?.name || 'อาจารย์';
+    this.loadStudents();
+  }
 
-    loadStudents() {
-        this.mentorService.getMyStudents().subscribe({
-            next: (data) => {
-                this.students = data;
-            },
-            error: (err) => {
-                console.error('Error loading students:', err);
-            }
-        });
-    }
+  loadStudents() {
+    this.mentorService.getMyStudents().subscribe({
+      next: (data) => {
+        this.students = data;
+      },
+      error: (err) => {
+        console.error('Error loading students:', err);
+      }
+    });
+  }
 
-    openAssessment(student: any) {
-        this.router.navigate(['/mentor/assessment', student.student_id]);
-    }
+  openAssessment(student: any) {
+    this.router.navigate(['/mentor/assessment', student.student_id]);
+  }
 }
