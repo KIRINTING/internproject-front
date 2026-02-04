@@ -13,6 +13,9 @@ import { NavbarComponent } from '../navbar/navbar.component';
       <main class="main-content">
         <router-outlet></router-outlet>
       </main>
+      <footer class="layout-footer">
+        <p>Copyright &copy; {{ currentYear }} Department of Computer CMRU</p>
+      </footer>
     </div>
   `,
   styles: [`
@@ -49,7 +52,17 @@ import { NavbarComponent } from '../navbar/navbar.component';
     .main-content::-webkit-scrollbar-thumb:hover {
       background: var(--text-muted);
     }
+
+    .layout-footer {
+      text-align: center;
+      padding: 1rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border-color);
+      background: var(--bg-main);
+    }
   `]
 })
 export class MainLayoutComponent {
+  currentYear = new Date().getFullYear();
 }
