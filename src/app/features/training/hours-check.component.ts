@@ -4,17 +4,17 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { DailyLogService, HoursSummary, DailyLog } from '../student/services/daily-log.service';
 import { AuthService } from '../../auth/auth.service';
 import { ConfirmationService } from 'primeng/api';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'app-hours-check',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ConfirmPopupModule, PaginatorModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ConfirmDialogModule, PaginatorModule],
   providers: [ConfirmationService],
   template: `
     <div class="page-container animate-fade-in">
-      <p-confirmpopup></p-confirmpopup>
+      <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
       <div class="page-header">
         <h2><span class="icon">⏱️</span> บันทึกเวลาและการประเมินการฝึกงาน</h2>
         <p>ติดตามชั่วโมงการทำงานและบันทึกความคืบหน้ารายวัน</p>
@@ -713,7 +713,6 @@ export class HoursCheckComponent implements OnInit {
 
   deleteLog(id: number, event: Event): void {
     this.confirmationService.confirm({
-      target: event.target as EventTarget,
       message: 'ยืนยันว่าต้องการลบรายการนี้?',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'ลบ',

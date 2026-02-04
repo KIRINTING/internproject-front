@@ -5,7 +5,7 @@
     </div>
 
     <div class="glass-panel form-card">
-        <p-confirmpopup></p-confirmpopup>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
         <form [formGroup]="requestForm" (ngSubmit)="onSubmit($event)">
 
             <!-- Section 1: Student Information -->

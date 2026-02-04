@@ -7,12 +7,12 @@ import { InternshipService } from './services/internship';
 import { AuthService } from '../../auth/auth.service';
 import { StudentService } from '../student-info/student.service';
 import { ConfirmationService } from 'primeng/api';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-internship-request',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, ConfirmPopupModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, ConfirmDialogModule],
   providers: [InternshipService, ConfirmationService],
   templateUrl: './internship-request.component.html',
   styleUrl: './internship-request.component.css'
@@ -125,7 +125,6 @@ export class InternshipRequestComponent implements OnInit {
     }
 
     this.confirmationService.confirm({
-      target: event.target as EventTarget,
       message: 'ยืนยันกาส่งข้อมูล? ข้อมูลไม่สามารถแก้ไขได้หลังจากส่ง',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

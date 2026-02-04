@@ -4,13 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SupervisorService } from '../services/supervisor.service';
 import { AuthService } from '../../../auth/auth.service';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
-    selector: 'app-supervisor-assessment',
-    standalone: true,
-    imports: [CommonModule, FormsModule],
-    template: `
+  selector: 'app-supervisor-assessment',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ConfirmDialogModule],
+  providers: [ConfirmationService],
+  template: `
     <div class="assessment-container">
+      <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
       <div class="header">
         <button (click)="goBack()" class="btn-back">
           ← กลับ
@@ -68,7 +72,7 @@ import { AuthService } from '../../../auth/auth.service';
       </div>
     </div>
   `,
-    styles: [`
+  styles: [`
     .assessment-container {
       padding: 2rem;
       background-color: #f5f7fa;
@@ -191,59 +195,74 @@ import { AuthService } from '../../../auth/auth.service';
   `]
 })
 export class SupervisorAssessmentComponent implements OnInit {
-    studentId: string | null = null;
-    currentUser: any;
+  studentId: string | null = null;
+  currentUser: any;
 
-    scores = {
-        quantity: null,
-        quality: null,
-        knowledge: null,
-        adaptability: null,
-        attitude: null
-    };
-    comments: string = '';
-    isSubmitting = false;
+  scores = {
+    quantity: null,
+    quality: null,
+    knowledge: null,
+    adaptability: null,
+    attitude: null
+  };
+  comments: string = '';
+  isSubmitting = false;
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private supervisorService: SupervisorService,
-        private authService: AuthService
-    ) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private supervisorService: SupervisorService,
+    private authService: AuthService,
+    private confirmationService: ConfirmationService
+  ) { }
 
-    ngOnInit() {
-        this.studentId = this.route.snapshot.paramMap.get('id');
-        this.currentUser = this.authService.getCurrentUser();
-    }
+  ngOnInit() {
+    this.studentId = this.route.snapshot.paramMap.get('id');
+    this.currentUser = this.authService.getCurrentUser();
+  }
 
-    goBack() {
+  goBack() {
+    this.confirmationService.confirm({
+      message: 'ต้องการยกเลิกการประเมินใช่หรือไม่? ข้อมูลที่กรอกจะไม่ถูกบันทึก',
+      header: 'ยืนยัน',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
         this.router.navigate(['/supervisor/dashboard']);
-    }
+      }
+    });
+  }
 
-    submitAssessment() {
-        if (!this.studentId || !this.currentUser) return;
+  submitAssessment() {
+    if (!this.studentId || !this.currentUser) return;
 
+    this.confirmationService.confirm({
+      message: 'ยืนยันการบันทึกผลการประเมิน? หลังจากบันทึกแล้วจะไม่สามารถแก้ไขได้',
+      header: 'ยืนยัน',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
         this.isSubmitting = true;
 
         const assessmentData = {
-            student_id: this.studentId,
-            evaluator_id: this.currentUser.id, // Or supervisor_id
-            evaluator_type: 'supervisor',
-            scores: this.scores,
-            comments: this.comments,
-            evaluation_date: new Date().toISOString().split('T')[0]
+          student_id: this.studentId,
+          evaluator_id: this.currentUser.id, // Or supervisor_id
+          evaluator_type: 'supervisor',
+          scores: this.scores,
+          comments: this.comments,
+          evaluation_date: new Date().toISOString().split('T')[0]
         };
 
         this.supervisorService.submitAssessment(assessmentData).subscribe({
-            next: (res) => {
-                alert('บันทึกผลการประเมินเรียบร้อยแล้ว');
-                this.goBack();
-            },
-            error: (err) => {
-                console.error(err);
-                alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
-                this.isSubmitting = false;
-            }
+          next: (res) => {
+            alert('บันทึกผลการประเมินเรียบร้อยแล้ว');
+            this.router.navigate(['/supervisor/dashboard']);
+          },
+          error: (err) => {
+            console.error(err);
+            alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+            this.isSubmitting = false;
+          }
         });
-    }
+      }
+    });
+  }
 }
