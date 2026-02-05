@@ -1,7 +1,7 @@
 {
     "rewrites": [
         {
-            "source": "/api-university/:path*",
+            "source": "/api/:path*",
             "destination": "http://www.comdept.cmru.ac.th/65143329/intern-api/:path*"
         }
     ]

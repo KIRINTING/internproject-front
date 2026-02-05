@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://interns-api-qut1.onrender.com'
+    apiUrl: 'https://www.comdept.cmru.ac.th/65143329/intern-api'
 };

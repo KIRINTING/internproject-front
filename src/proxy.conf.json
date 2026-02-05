@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "http://localhost:8000",
+        "target": "hhttps://www.comdept.cmru.ac.th/65143329/intern-api",
         "secure": false,
         "changeOrigin": true
     }
