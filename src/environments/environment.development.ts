@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:8000/api'
+    apiUrl: 'http://www.comdept.cmru.ac.th/65143329'
 };
