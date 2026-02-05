@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/proxy-api/:path*",
-            "destination": "http://www.comdept.cmru.ac.th/65143329/intern-api/:path*"
+            "destination": "http://www.comdept.cmru.ac.th/65143329/:path*"
         }
     ]
 }

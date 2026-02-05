@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "https://www.comdept.cmru.ac.th/65143329/intern-api",
+        "target": "https://www.comdept.cmru.ac.th/65143329/",
         "secure": false,
         "changeOrigin": true
     }
