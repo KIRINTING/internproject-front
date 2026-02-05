@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://www.comdept.cmru.ac.th/65143329/api'
+    apiUrl: 'https://www.comdept.cmru.ac.th/65143329/api'
 };
