@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "https://www.comdept.cmru.ac.th/65143329/",
+        "target": "https://apimyproject-production.up.railway.app",
         "secure": false,
         "changeOrigin": true
     }
