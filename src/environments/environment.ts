@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: '/proxy-api'
+    apiUrl: 'https://apimyproject-production.up.railway.app'
 };

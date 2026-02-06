@@ -1,7 +1,0 @@
-{
-    "/api": {
-        "target": "https://apimyproject-production.up.railway.app",
-        "secure": false,
-        "changeOrigin": true
-    }
-}
