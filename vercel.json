@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/proxy-api/:path*",
-            "destination": "https://apimyproject-production.up.railway.app/api"
+            "destination": "https://apimyproject-production.up.railway.app"
         }
     ]
 }
