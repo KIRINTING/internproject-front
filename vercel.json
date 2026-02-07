@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/proxy-api/:path*",
-            "destination": "http://www.comdept.cmru.ac.th/65143329/api/:path*"
+            "destination": "https://apimyproject-production.up.railway.app/api"
         }
     ]
 }
